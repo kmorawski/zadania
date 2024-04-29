@@ -2,8 +2,8 @@
 
 namespace App\ReadStrategy;
 
+use App\Exception\FileReaderException;
 use Generator;
-use RuntimeException;
 
 class LargeFileRead implements FileReaderInterface
 {
@@ -23,12 +23,14 @@ class LargeFileRead implements FileReaderInterface
      * Read large file.
      *
      * @return Generator
+     *
+     * @throws FileReaderException
      */
     private function readLargeFile(): Generator
     {
         $file = fopen($this->filePath, 'r');
         if (!$file) {
-            throw new RuntimeException('Failed to open file.');
+            throw new FileReaderException('Failed to open file');
         }
 
         while ($line = fgets($file)) {
@@ -40,6 +42,8 @@ class LargeFileRead implements FileReaderInterface
 
     /**
      * @inheritdoc
+     *
+     * @throws FileReaderException
      */
     public function getFileLines(): Generator
     {

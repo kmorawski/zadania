@@ -1,16 +1,16 @@
 <?php
 namespace App\Tests\Unit;
 
+use App\Exception\FileReaderException;
 use PHPUnit\Framework\TestCase;
 use App\ReadStrategy\LargeFileRead;
-use RuntimeException;
 
 class LargeFileReadTest extends TestCase
 {
     public function testReadLargeFileWhenFileNotExists(): void
     {
         $filePath = '/path/to/nonexistent.file';
-        $this->expectException(RuntimeException::class);
+        $this->expectException(FileReaderException::class);
         $this->expectExceptionMessage('Failed to open file');
 
         $reader = new LargeFileRead($filePath);

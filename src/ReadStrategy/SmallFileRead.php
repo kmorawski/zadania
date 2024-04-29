@@ -2,8 +2,8 @@
 
 namespace App\ReadStrategy;
 
+use App\Exception\FileReaderException;
 use Generator;
-use RuntimeException;
 
 class SmallFileRead implements FileReaderInterface
 {
@@ -21,6 +21,7 @@ class SmallFileRead implements FileReaderInterface
 
     /**
      * @inheritdoc
+     * @throws FileReaderException
      */
     public function getFileLines(): Generator
     {
@@ -33,13 +34,15 @@ class SmallFileRead implements FileReaderInterface
      * File lines.
      *
      * @return array
+     *
+     * @throws FileReaderException
      */
     private function fileLines(): array
     {
         $lines = file($this->filePath);
 
         if (!$lines) {
-            throw new RuntimeException('Failed to open file');
+            throw new FileReaderException('Failed to open file');
         }
 
         return $lines;

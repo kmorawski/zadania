@@ -1,11 +1,11 @@
 <?php
 namespace App\Tests\Unit;
 
+use App\Exception\FileReaderException;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use App\TextFileReader;
 use App\ReadStrategy\SmallFileRead;
-use RuntimeException;
 
 class TextFileReaderTest extends TestCase
 {
@@ -19,7 +19,7 @@ class TextFileReaderTest extends TestCase
     public function testGetDataWhenNonexistent(): void
     {
         $filePath = '/path/to/nonexistent.file';
-        $this->expectException(RuntimeException::class);
+        $this->expectException(FileReaderException::class);
         $this->expectExceptionMessage('Failed to open file');
 
         $reader = new TextFileReader(new SmallFileRead($filePath));

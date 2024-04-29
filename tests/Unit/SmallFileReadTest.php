@@ -1,9 +1,9 @@
 <?php
 namespace App\Tests\Unit;
 
+use App\Exception\FileReaderException;
 use App\ReadStrategy\SmallFileRead;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 
 class SmallFileReadTest extends TestCase
 {
@@ -27,7 +27,7 @@ class SmallFileReadTest extends TestCase
     public function testReadNonexistentFile(): void
     {
         $filePath = '/path/to/nonexistent.file';
-        $this->expectException(RuntimeException::class);
+        $this->expectException(FileReaderException::class);
         $this->expectExceptionMessage('Failed to open file');
 
         $reader = new SmallFileRead($filePath);
