@@ -48,7 +48,6 @@ class FileClient
         }
 
         if ($withConvert) {
-            // Zastosowanie dekoratora
             $textReader = new LineConverterToUnixFormat($textReader);
             echo 'WITH CONVERT' . PHP_EOL;
         } else {
