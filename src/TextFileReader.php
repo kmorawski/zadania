@@ -29,18 +29,9 @@ class TextFileReader implements ReaderInterface
         $this->reader = $reader;
     }
 
-    /**
-     * Get the file size type based on the given file path.
-     *
-     * @param string $filePath The path of the file to check.
-     *
-     * @return FileSizeTypeEnum The file size type determined.
-     */
-    public static function getFileSizeType(string $filePath): FileSizeTypeEnum
+    public static function isLargeFile(string $filePath): bool
     {
-        return (filesize($filePath) > self::MAX_SMALL_FILE_SIZE)
-            ? FileSizeTypeEnum::LARGE
-            : FileSizeTypeEnum::SMALL;
+        return (filesize($filePath) > self::MAX_SMALL_FILE_SIZE);
     }
 
     /**

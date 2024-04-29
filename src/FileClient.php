@@ -40,11 +40,7 @@ class FileClient
             throw new FileDoesNotExistException($this->filePathFallBack);
         }
 
-        // Wykrycie statusu rozmiaru pliku
-        $fileSizeType = TextFileReader::getFileSizeType($fileToRead);
-
-        // Jeżeli status pliku jest LARGE, to podmieniamy strategię odczytu pliku
-        if ($fileSizeType === FileSizeTypeEnum::LARGE) {
+        if (TextFileReader::isLargeFile($fileToRead)) {
             echo 'LARGE' . PHP_EOL;
             $textReader->setFileReader(new LargeFileRead($fileToRead));
         } else {

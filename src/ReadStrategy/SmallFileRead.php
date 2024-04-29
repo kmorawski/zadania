@@ -39,7 +39,7 @@ class SmallFileRead implements FileReaderInterface
         $lines = file($this->filePath);
 
         if (!$lines) {
-            throw new RuntimeException(sprintf('Failed to open file: %s.', $this->filePath));
+            throw new RuntimeException('Failed to open file');
         }
 
         return $lines;

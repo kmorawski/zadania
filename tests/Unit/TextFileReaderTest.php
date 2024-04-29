@@ -1,7 +1,6 @@
 <?php
 namespace App\Tests\Unit;
 
-use App\FileSizeTypeEnum;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use App\TextFileReader;
@@ -29,17 +28,15 @@ class TextFileReaderTest extends TestCase
 
     public function testGetFileSizeTypeForSmallFile(): void
     {
-        $this->assertEquals(
-            FileSizeTypeEnum::SMALL,
-            TextFileReader::getFileSizeType(__DIR__ . '/Fixtures/test_data.txt')
+        $this->assertFalse(
+            TextFileReader::isLargeFile(__DIR__ . '/Fixtures/test_data.txt')
         );
     }
 
     public function testGetFileSizeTypeForLargeFile(): void
     {
-        $this->assertEquals(
-            FileSizeTypeEnum::LARGE,
-            TextFileReader::getFileSizeType(__DIR__ . '/Fixtures/large_test_data.txt')
+        $this->assertTrue(
+            TextFileReader::isLargeFile(__DIR__ . '/Fixtures/large_test_data.txt')
         );
     }
 

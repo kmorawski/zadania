@@ -19,8 +19,6 @@ class LargeFileRead implements FileReaderInterface
         $this->filePath = $filePath;
     }
 
-    const BUFFER_SIZE = 4096;
-
     /**
      * Read large file.
      *
@@ -30,26 +28,11 @@ class LargeFileRead implements FileReaderInterface
     {
         $file = fopen($this->filePath, 'r');
         if (!$file) {
-            throw new RuntimeException(sprintf('Failed to open file: %s.', $this->filePath));
+            throw new RuntimeException('Failed to open file.');
         }
 
-        $buffer = '';
-        while (!feof($file)) {
-            $buffer .= fread($file, self::BUFFER_SIZE);
-
-            $lines = explode("\r\n", $buffer);
-
-            // Zwraca linie odczytane w buforze
-            while (count($lines) > 1) {
-                yield array_shift($lines) . "\r\n";
-            }
-
-            // Niepełną linia do bufora
-            $buffer = end($lines);
-        }
-
-        if (!empty($buffer)) {
-            yield $buffer;
+        while ($line = fgets($file)) {
+            yield $line;
         }
 
         fclose($file);
